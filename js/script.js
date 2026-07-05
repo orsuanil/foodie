@@ -94,7 +94,7 @@ async function loadRestaurants() {
 
     try {
 
-        let response = await fetch("http://localhost:8081/restaurants");
+        let response = await fetch("https://foodie-backend-production-4b6f.up.railway.app/restaurants");
 
         let restaurants = await response.json();
         console.log(restaurants);
