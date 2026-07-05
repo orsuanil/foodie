@@ -1,0 +1,100 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie - Cart</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js" defer></script>
+</head>
+
+<body>
+
+    <nav>
+        <h2>🍕 Foodie</h2>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="cart.html">Cart</a></li>
+        </ul>
+    </nav>
+<section class="cart-page">
+<div class="cart-header">
+
+    <h1>🛒 Shopping Cart</h1>
+
+</div>
+
+    <p class="cart-subtitle">
+        Review your selected items before checkout.
+    </p>
+
+    <div id="cart-items"></div>
+
+<div class="cart-summary">
+
+    <div class="coupon-section">
+
+        <h3>🏷️ Have a Coupon?</h3>
+
+        <p>Apply coupon code for discounts</p>
+
+        <div class="coupon-box">
+
+            <input
+                type="text"
+                placeholder="Enter coupon code">
+
+            <button>Apply</button>
+
+        </div>
+
+    </div>
+
+    <div class="bill-section">
+
+        <div class="bill-row">
+
+            <span>Subtotal</span>
+
+            <span id="subtotal">₹0</span>
+
+        </div>
+
+        <div class="bill-row">
+
+            <span>Delivery Fee</span>
+
+            <span>₹0</span>
+
+        </div>
+
+        <hr>
+
+        <div class="bill-total">
+
+            <span>Total Amount</span>
+
+            <span id="total">₹0</span>
+
+        </div>
+
+    </div>
+
+    <button
+        class="checkout-btn"
+        onclick="goToCheckout()">
+
+        🔒 Proceed to Checkout
+
+    </button>
+
+</div>
+
+</section>
+</body>
+
+</html>

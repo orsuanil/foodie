@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Foodie</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js" defer></script>
+</head>
+
+<body>
+
+    <nav>
+        <h2>🍕 Foodie</h2>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="cart.html">Cart</a></li>
+           <li> <a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="checkout">
+
+        <h1>Checkout</h1>
+
+        <form id="checkoutForm">
+
+            <input type="text" id="name" placeholder="Full Name" required>
+
+            <input type="text" id="phone" placeholder="Phone Number" required>
+
+            <textarea id="address" placeholder="Delivery Address" required></textarea>
+
+            <select id="paymentMethod" required>
+    <option value="COD">Cash On Delivery</option>
+    <option value="UPI">UPI</option>
+    <option value="Card">Credit / Debit Card</option>
+    <option value="NetBanking">Net Banking</option>
+</select>
+
+            <button type="submit">Place Order</button>
+
+        </form>
+
+    </section>
+
+</body>
+
+</html>
