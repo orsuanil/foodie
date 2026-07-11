@@ -2,6 +2,8 @@
 
 function addToCart(name, price) {
 
+    console.log("Clicked:", name, price);
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     cart.push({
@@ -10,6 +12,8 @@ function addToCart(name, price) {
     });
 
     localStorage.setItem("cart", JSON.stringify(cart));
+
+    console.log(localStorage.getItem("cart"));
 
     alert(name + " added to cart!");
 }
@@ -65,68 +69,126 @@ function goToCheckout() {
 
 // Run only on cart page
 displayCart();
-
 let checkoutForm = document.getElementById("checkoutForm");
 
-if(checkoutForm){
+if (checkoutForm) {
 
-    checkoutForm.addEventListener("submit", function(e){
+    checkoutForm.addEventListener("submit", async function(e) {
 
         e.preventDefault();
 
-        alert("Order Placed Successfully!");
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-        localStorage.removeItem("cart");
+        let orderDetails = "🍔 New Food Order\n\n";
 
-        window.location.href = "success.html";
+        cart.forEach(item => {
+            orderDetails += `${item.name} - ₹${item.price}\n`;
+        });
+
+        let total = cart.reduce((sum, item) => sum + item.price, 0);
+
+        orderDetails += "\nTotal: ₹" + total;
+
+        try {
+
+            const response = await fetch("https://foodie-backend-production-81b4.up.railway.app/order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    items: orderDetails,
+                    total: total
+                })
+            });
+
+            console.log(await response.text());
+
+            alert("Order Placed Successfully!");
+
+            localStorage.removeItem("cart");
+
+            window.location.href = "success.html";
+
+        } catch (err) {
+
+            console.error(err);
+
+            alert("Could not place order!");
+
+        }
 
     });
 
 }
+ 
 
+
+
+
+
+// Load Restaurants from Spring Boot
 // Load Restaurants from Spring Boot
 async function loadRestaurants() {
 
-        console.log("Loading restaurants...");
+    console.log("Loading restaurants...");
+
     let container = document.getElementById("menu-container");
 
     if (!container) return;
 
     try {
 
-       let response = await fetch("https://foodie-backend-production-81b4.up.railway.app/restaurants");
+        let response = await fetch("https://foodie-backend-production-81b4.up.railway.app/restaurants");
 
         let restaurants = await response.json();
+
         console.log(restaurants);
 
         container.innerHTML = "";
 
-        restaurants.forEach(function(item){
+        restaurants.forEach(function(item) {
 
-         container.innerHTML += `
-    <div class="food-card">
+            container.innerHTML += `
+                <div class="food-card">
 
-        <img src="./images/${item.image}" alt="${item.name}" class="food-image">
+                    <img src="./images/${item.image}" alt="${item.name}" class="food-image">
 
-        <h2>${item.name}</h2>
-        
-<p>${item.address}</p>
-<p>${item.phone}</p>
-<h3>⭐ ${item.rating} &nbsp;&nbsp; 📍 ${item.address}</h3>
+                    <h2>${item.name}</h2>
 
-<p class="price">₹${item.price}</p>
+                    <p>${item.address}</p>
+                    <p>${item.phone}</p>
 
-<button onclick="addToCart('${item.name}',${item.price})">
-    Add to Cart
-</button>
-    </div>
-`;
+                    <h3>⭐ ${item.rating} &nbsp;&nbsp; 📍 ${item.address}</h3>
+
+                    <p class="price">₹${item.price}</p>
+
+                    <button class="add-btn"
+                            data-name="${item.name}"
+                            data-price="${item.price}">
+                        Add to Cart
+                    </button>
+
+                </div>
+            `;
         });
 
-    } catch(error){
-    console.error("Fetch Error:", error);
-    alert("Fetch Error: " + error);
-}
+        // Add click event to every button
+        document.querySelectorAll(".add-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                addToCart(
+                    this.dataset.name,
+                    Number(this.dataset.price)
+                );
+            });
+        });
+
+    } catch (error) {
+
+        console.error("Fetch Error:", error);
+        alert("Fetch Error: " + error);
+
+    }
 }
 
 loadRestaurants();
