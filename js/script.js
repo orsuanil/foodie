@@ -91,7 +91,7 @@ if (checkoutForm) {
 
         try {
 
-            const response = await fetch("https://foodie-backend-production-81b4.up.railway.app/order", {
+            const response = await fetch("https://foodie-backend-gx9m.onrender.com/order", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -139,8 +139,7 @@ async function loadRestaurants() {
 
     try {
 
-        let response = await fetch("https://foodie-backend-production-81b4.up.railway.app/restaurants");
-
+       let response = await fetch("https://foodie-backend-gx9m.onrender.com/restaurants");
         let restaurants = await response.json();
 
         console.log(restaurants);
